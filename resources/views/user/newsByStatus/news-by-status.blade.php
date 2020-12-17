@@ -4,10 +4,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 bg-white">
+                <h2 class="text-center my-5">Все новости по статусу "{{ $allNewsByStatus[0]->title }}"</h2>
                 <div class="row justify-content-center">
-                    <h2 class="text-center my-5">Все новости по тегу "{{ $newsByTag->title }}"</h2>
-                    <div class="row justify-content-center">
-                        @foreach($newsByTag->news as $news)
+                    @foreach($allNewsByStatus as $status)
+                        @foreach($status->news as $news)
                             <div class="card col-md-5 mb-3 mx-3">
                                 @isset($news->images[0]->image_url)
                                 <div class="py-3">
@@ -50,9 +50,11 @@
                                 </div>
                             </div>
                         @endforeach
-                    </div>
+                    @endforeach
                 </div>
             </div>
+
+            {{-- правый сайдбар --}}
             <div class="col-md-4 border-left bg-white">
                 @include('user.layout.sidebar')
             </div>

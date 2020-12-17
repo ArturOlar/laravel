@@ -6,7 +6,7 @@
             <div class="col-md-8">
                 <h2 class="my-5">
                     @foreach($allCategories as $category)
-                        <div class="border-top border-bottom py-5 my-3">
+                        <div class="border-top border-bottom py-5 my-3 bg-white">
                             <div class="row">
                                 <div class="col-md-7">
                                     <p class="pl-2">Категория: {{ $category->title }}</p>
@@ -22,7 +22,7 @@
 
                 </div>
             </div>
-            <div class="col-md-4 border-left">
+            <div class="col-md-4 border-left bg-white">
                 @include('user.layout.sidebar')
             </div>
         </div>

@@ -22,7 +22,7 @@ class CategorySeeder extends Seeder
         'IT',
         'Политика',
         'Наука',
-        'Економика'
+        'Экономика'
     ];
 
     private function getData()

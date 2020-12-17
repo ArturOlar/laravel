@@ -5,7 +5,7 @@
         <div class="row">
 
             {{-- контент страницы --}}
-            <div class="col-md-8">
+            <div class="col-md-8 bg-white">
 
                 {{-- карточка с новостью --}}
                 <div class="my-5 border-bottom">
@@ -23,8 +23,7 @@
 
                     <div class="row mb-2">
                         <div class="col-md-6">
-                            <span><b>Категория:</b> <a
-                                        href="{{ route('one-category', ['id' => $news->category->id_category]) }}">{{ $news->category->title }}</a></span>
+                            <span><b>Категория:</b> <a href="{{ route('one-category', ['id' => $news->category->id_category]) }}">{{ $news->category->title }}</a></span>
                             <br>
                         </div>
                         <div class="col-md-6 text-right">
@@ -38,13 +37,16 @@
                     </div>
 
                     {{-- первое описание к новости --}}
-                    <p class="my-5">{{ $news->content }}</p>
+                    <p class="my-5">{!! $news->content !!}</p>
 
                     {{-- первое изображение к новости --}}
                     @isset($news->images[0]->image_url)
                         <div class="row justify-content-center mb-5">
                             <img class="mr-2 mb-2 float-left news-image"
-                                 src="{{ asset('storage/' . $news->images[0]->image_url) }}"
+                                 src="
+                                 @if(substr($news->images[0]->image_url, 0, 5) == 'https') {{ $news->images[0]->image_url }}
+                                 @else {{ asset('storage/' . $news->images[0]->image_url) }}
+                                 @endif"
                                  alt="img">
                         </div>
                     @endisset
@@ -141,8 +143,9 @@
             </div>
 
             {{-- правый сайдбар страницы --}}
-            <div class="col-md-4 border">
+            <div class="col-md-4 border bg-white">
                 @include('user.layout.sidebar')
             </div>
         </div>
+    </div>
 @endsection

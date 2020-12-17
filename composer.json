@@ -12,7 +12,12 @@
         "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.8.*",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "laravel/ui": "^1.2",
+        "orchestra/parser": "^3.8",
+        "socialiteproviders/facebook": "^1.0",
+        "socialiteproviders/github": "^1.0",
+        "socialiteproviders/vkontakte": "^4.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

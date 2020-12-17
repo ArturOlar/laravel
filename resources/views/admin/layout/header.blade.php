@@ -14,6 +14,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('new-review') }}">Управление отзывами</a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('all-users') }}" class="nav-link">Управление пользователями</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('all-parsers') }}" class="nav-link">Парсинг</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('all-news') }}" class="nav-link">На сайт</a>
+                </li>
             </ul>
         </div>
     </div>

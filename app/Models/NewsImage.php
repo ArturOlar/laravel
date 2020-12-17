@@ -30,6 +30,16 @@ class NewsImage extends Model
         return;
     }
 
+    // создание изображений к новости (используется при парсере новостей)
+    public static function createImagesForNewsParser($urlImage, $newsId)
+    {
+        NewsImage::create([
+            'id_news' => $newsId,
+            'image_url' => $urlImage,
+        ]);
+        return;
+    }
+
     // удаление изображения
     public static function deleteImage($id)
     {
