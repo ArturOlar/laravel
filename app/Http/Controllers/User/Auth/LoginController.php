@@ -47,16 +47,19 @@ class LoginController extends Controller
         $this->userRepository = new UserRepository();
     }
 
+    // показ шаблона
     public function showLoginForm()
     {
         return view('user.auth.login');
     }
 
+    // авторизация через фейсбук
     public function authFacebook()
     {
         return Socialite::with('facebook')->redirect();
     }
 
+    // редирект из фейсбука на сайт
     public function callbackFacebook()
     {
         $userData = Socialite::driver('facebook')->user();
@@ -65,15 +68,32 @@ class LoginController extends Controller
         return redirect()->route('home');
     }
 
+    // авториазция через гитхаб
     public function authGithub()
     {
         return Socialite::with('github')->redirect();
     }
 
+    // редирект из гитхаба на сайт
     public function callbackGithub()
     {
         $userData = Socialite::driver('github')->user();
         $user = $this->userRepository->getOrCreateUserBySocData($userData, 'github');
+        Auth::login($user);
+        return redirect()->route('home');
+    }
+
+    // авторизация через gmail
+    public function authGoogle()
+    {
+        return Socialite::with('google')->redirect();
+    }
+
+    // редирект из gmail на сайт
+    public function callbackGoogle()
+    {
+        $userData = Socialite::driver('google')->user();
+        $user = $this->userRepository->getOrCreateUserBySocData($userData, 'google');
         Auth::login($user);
         return redirect()->route('home');
     }
