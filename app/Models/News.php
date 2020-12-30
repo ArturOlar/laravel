@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class News extends Model
 {
     protected $primaryKey = 'id_news';
-    protected $fillable = ['id_news', 'title', 'spoiler', 'content', 'content_second', 'id_category', 'id_author'];
+    protected $fillable = ['id_news', 'title', 'spoiler', 'content', 'content_second', 'id_category', 'id_author', 'guid'];
 
     // сохранить новую новость
     public static function createNews(Request $request)

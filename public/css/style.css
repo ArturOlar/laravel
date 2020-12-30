@@ -7,3 +7,9 @@ body {
     width: 700px;
     height: 700px;
 }
+
+/* спойлер новости на главной странице */
+.home-spoiler > img {
+    width: 150px;
+    height: 150px;
+}

@@ -14,11 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('/')->namespace('User')->group(function () {
+    Route::get('/home', 'HomeController@index')->name('home');
 
     Route::get('/', 'NewsController@allNews')->name('all-news');
     Route::prefix('/news')->group(function () {
         Route::get('/{name}', 'NewsController@oneNews')->name('one-news');
     });
+    Route::post('/add-review', 'ReviewController@createReview')->name('add-review');
 
     Route::prefix('/category')->group(function () {
         Route::get('/all', 'CategoryController@allCategories')->name('all-categories');
@@ -30,14 +32,19 @@ Route::prefix('/')->namespace('User')->group(function () {
         Route::get('/{id}', 'TagController@oneTag')->name('one-tag');
     });
 
-    Route::post('/add-review', 'ReviewController@createReview')->name('add-review');
-
-    Route::get('/authors', function () {
-        return view('user.author.authors');
+    Route::prefix('/news-by-status')->group(function () {
+        Route::get('/{id}', 'StatusController@allNewsByStatus')->name('news-by-status');
     });
 });
 
-Route::prefix('/admin')->namespace('Admin')->group(function() {
+
+Route::get('/auth/facebook', 'Auth\LoginController@authFacebook')->name('auth-facebook');
+Route::get('/auth/facebook/callback', 'Auth\LoginController@callbackFacebook')->name('callback-facebook');
+Route::get('/auth/github', 'Auth\LoginController@authGithub')->name('auth-github');
+Route::get('/auth/github/callback', 'Auth\LoginController@callbackGithub')->name('callback-github');
+
+
+Route::prefix('/admin')->namespace('Admin')->middleware('auth')->group(function () {
     Route::resource('/news', 'NewsController');
     Route::resource('/category', 'CategoryController');
     Route::resource('/tag', 'TagController');
@@ -53,4 +60,19 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
         Route::post('/publish', 'ReviewController@addToPublishReview')->name('add-to-publish-review');
         Route::post('/canceled', 'ReviewController@addToCanceledReview')->name('add-to-canceled-review');
     });
+
+    Route::prefix('/user')->group(function () {
+        Route::get('/all', 'UserController@allUsers')->name('all-users');
+        Route::post('/changeStatus/{id}', 'UserController@changeStatus')->name('change-status');
+    });
+    
+    Route::prefix('/parser')->group(function () {
+        Route::get('/', 'ParserController@allParsers')->name('all-parsers');
+        Route::get('/rbc', 'ParserController@parserRBC')->name('parser-rbc');
+        Route::get('/112', 'ParserController@parser112')->name('parser-112');
+        Route::get('/korrespondent', 'ParserController@parserKorrespondent')->name('parser-korrespondent');
+    });
 });
+
+Auth::routes();
+//['register' => false]
