@@ -12,17 +12,9 @@
             <form action="{{ route('author.store') }}" method="POST">
                 @csrf
                 <div class="form-group">
-                    <label>Имя автора</label>
-                    <input name="name" type="text" class="form-control @error('title') is-invalid @enderror" value="">
+                    <label><b>Имя и Фамилия автора</b></label>
+                    <input name="name" type="text" class="form-control @error('title') is-invalid @enderror" value="{{ old('name') }}">
                     @error('name')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label>Фамилия автора</label>
-                    <input name="surname" type="text" class="form-control @error('title') is-invalid @enderror" value="">
-                    @error('surname')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>

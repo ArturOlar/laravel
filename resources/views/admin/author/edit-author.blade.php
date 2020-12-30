@@ -14,22 +14,14 @@
                 @csrf
                 @method('PUT')
                 <div class="form-group">
-                    <label>ID Автора</label>
+                    <label><b>ID Автора</b></label>
                     <input name="id_author" type="text" class="form-control" value="{{ $author->id_author }}" disabled>
                 </div>
 
                 <div class="form-group">
-                    <label>Имя автора</label>
-                    <input name="name" type="text" class="form-control @error('name') is-invalid @enderror" value="{{ $author->name }}">
+                    <label><b>Имя и Фамилия автора</b></label>
+                    <input name="name" type="text" class="form-control @error('name') is-invalid @enderror" value="{{ old('name', $author->name) }}">
                     @error('name')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label>Фамилия автора</label>
-                    <input name="surname" type="text" class="form-control @error('surname') is-invalid @enderror" value="{{ $author->surname }}">
-                    @error('surname')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>

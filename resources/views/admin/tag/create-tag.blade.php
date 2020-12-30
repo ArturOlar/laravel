@@ -13,7 +13,7 @@
                 @csrf
                 <div class="form-group">
                     <label>Название тега</label>
-                    <input name="title" type="text" class="form-control @error('title') is-invalid @enderror" value="">
+                    <input name="title" type="text" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}">
                     @error('title')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror

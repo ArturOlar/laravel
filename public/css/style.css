@@ -1,15 +1,24 @@
 body {
     background-color: rgb(250, 250, 250);
+    background-color: red;
 }
 
 /* изображение в карточке новости */
 .news-image {
-    width: 700px;
-    height: 700px;
+    max-width: 700px;
+    max-height: 700px;
 }
 
 /* спойлер новости на главной странице */
-.home-spoiler > img {
-    width: 150px;
-    height: 150px;
+.home-spoiler img {
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 15px;
+    max-width: 200px;
+    max-height: 200px;
+}
+
+/* иконки на странице авторизации */
+.login-icon-sign {
+    width: 30px;
 }

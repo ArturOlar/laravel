@@ -12,8 +12,7 @@
     <table class="table table-bordered mx-5">
         <thead class="thead-dark">
         <tr>
-            <th scope="col">Id новости</th>
-            <th scope="col">Заголовок новости</th>
+            <th scope="col">Id отзыва</th>
             <th scope="col">Id пользователя</th>
             <th scope="col">Имя пользователя</th>
             <th scope="col">Отзыв</th>
@@ -24,9 +23,8 @@
         @foreach($reviews as $review)
             <tr>
                 <th scope="row">{{ $review->id_news }}</th>
-                <td></td>
                 <td>{{ $review->id_user }}</td>
-                <td></td>
+                <td>{{ $review->user->name }}</td>
                 <td>{{ $review->content }}</td>
                 <td>
                     <form action="{{ route('add-to-publish-review') }}" method="POST">

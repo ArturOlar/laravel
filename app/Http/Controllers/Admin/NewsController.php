@@ -60,7 +60,6 @@ class NewsController extends Controller
         $idNews = News::createNews($request);
         NewsTag::createTagsForNews($request, $idNews);
         NewsStatus::createStatusesForNews($request, $idNews);
-        NewsImage::createImagesForNews($request, $idNews);
 
         session()->flash('success', 'новость успешно создана');
         return redirect()->back();
@@ -88,8 +87,8 @@ class NewsController extends Controller
         $news = News::find($id);
         $allCategory = Category::all();
         $allAuthors = Author::all();
-        $allTags = Tag::all();
-        $allStatuses = Status::all();
+        $allTags = Tag::getTagFromCheked($news);
+        $allStatuses = Status::getStatusFromCheked($news);
 
         return view('admin.news.edit-news', [
             'news' => $news,
@@ -116,9 +115,6 @@ class NewsController extends Controller
         NewsTag::updateTagsForNews($request, $id);
         NewsStatus::updateStatusesForNews($request, $id);
 
-        // добавить изображение
-        NewsImage::createImagesForNews($request, $id);
-
         session()->flash('success', 'новость успешно обновлена');
         return redirect()->back();
     }
@@ -137,5 +133,11 @@ class NewsController extends Controller
 
         session()->flash('success', 'новость удалена');
         return redirect()->back();
+    }
+
+    public function deleteImage(Request $request)
+    {
+        News::where('id_news', $request->id_image)->update(['image_url' => '']);
+        echo json_encode('Изображение удалено!');
     }
 }

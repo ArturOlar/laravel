@@ -2,21 +2,21 @@
     <div class="container">
         <div class="row text-white">
             <div class="col-md-3 mt-5 pd-5">
-                <h5>Все категории</h5>
+                <h5><a class="text-white" href="{{ route('all-categories') }}">Все категории</a></h5>
                 <ul>
                     @foreach($categoriesFooter as $category)
                         <li><a class="text-white"
-                               href="{{ route('one-category', ['id' => $category->id_category ]) }}">{{ $category->title }}</a>
+                               href="{{ route('one-category', ['slug' => $category->slug ]) }}">{{ $category->title }}</a>
                         </li>
                     @endforeach
                 </ul>
             </div>
             <div class="col-md-3 mt-5 pd-5">
-                <h5>Все теги</h5>
+                <h5><a class="text-white" href="{{ route('all-tags') }}">Все теги</a></h5>
                 <ul>
                     @foreach($tagsFooter as $tag)
                         <li><a class="text-white"
-                               href="{{ route('one-tag', ['id' => $tag->id_tag ]) }}">{{ $tag->title }}</a></li>
+                               href="{{ route('one-tag', ['slug' => $tag->slug ]) }}">{{ $tag->title }}</a></li>
                     @endforeach
                 </ul>
             </div>
@@ -24,7 +24,7 @@
                 <h5>Новости по статусу</h5>
                 <ul>
                     @foreach($newsByStatusFooter as $news)
-                        <li><a class="text-white" href="{{ route('news-by-status', ['id' => $news->id_status ]) }}">{{ $news->title }}</a></li>
+                        <li><a class="text-white" href="{{ route('news-by-status', ['slug' => $news->slug ]) }}">{{ $news->title }}</a></li>
                     @endforeach
                 </ul>
             </div>

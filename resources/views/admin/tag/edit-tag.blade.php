@@ -9,6 +9,17 @@
 
     {{-- все категории --}}
     <div class="container">
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <div class="my-5">
             <form action="{{ route('tag.update', ['id' => $tag->id_tag ]) }}" method="POST">
                 @csrf
@@ -20,7 +31,7 @@
 
                 <div class="form-group">
                     <label>Название тега</label>
-                    <input name="title" type="text" class="form-control @error('title') is-invalid @enderror" value="{{ $tag->title }}">
+                    <input name="title" type="text" class="form-control @error('title') is-invalid @enderror" value="{{ old('title', $tag->title) }}">
                     @error('title')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror

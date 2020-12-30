@@ -39,7 +39,8 @@ class TagSeeder extends Seeder
             };
             $data[] = [
                 'title' => '#' . $this->tags[$i],
-                'id_status_view' => $tagsView[$k]->id_status
+                'id_status_view' => $tagsView[$k]->id_status,
+                'slug' => \App\Models\News::cutTextAndMakeSlug($this->tags[$i])
             ];
             $k++;
         }

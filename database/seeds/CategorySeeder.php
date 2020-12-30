@@ -30,7 +30,8 @@ class CategorySeeder extends Seeder
         $data = [];
         for ($i = 0; $i < count($this->categoryArray); $i++) {
             $data[] = [
-                'title' => $this->categoryArray[$i]
+                'title' => $this->categoryArray[$i],
+                'slug' => \App\Models\News::cutTextAndMakeSlug($this->categoryArray[$i])
             ];
         }
         return $data;

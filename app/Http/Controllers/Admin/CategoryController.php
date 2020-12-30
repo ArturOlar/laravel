@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\StoreCategoryRequest;
 use App\Models\Category;
+use App\Models\News;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -40,7 +41,10 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        Category::create(['title' => $request->title]);
+        Category::create([
+            'title' => $request->title,
+            'slug' => News::cutTextAndMakeSlug($request->title)
+        ]);
 
         session()->flash('success', 'категория успешно сохранена');
         return redirect()->back();

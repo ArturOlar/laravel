@@ -24,8 +24,7 @@ class StoreAuthorRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:3|max:20',
-            'surname' => 'required|min:3|max:20'
+            'name' => 'required|min:6|max:50',
         ];
     }
 }

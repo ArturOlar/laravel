@@ -2,7 +2,7 @@
 
 @section('content')
     {{-- навигация по управлению новостей --}}
-    @include('admin.review.navbar-review')
+    @include('admin.parser.parser-navbar')
 
     {{-- подключение сообщений --}}
     @include('admin.alert.alert')
@@ -17,6 +17,11 @@
             </div>
             <div class="col-md-4 text-center border-left">
                 <h5>Парсинг сайта "Корреспондент" </h5><a href="{{ route('parser-korrespondent') }}" class="btn btn-primary mt-3">Парсить</a>
+            </div>
+        </div>
+        <div class="row border-top mt-5 py-5">
+            <div class="col-md-4 text-center border-right">
+                <h5>Парсинг сайта "Newsru" </h5><a href="{{ route('parser-news-ru') }}" class="btn btn-primary mt-3">Парсить</a>
             </div>
         </div>
     </div>

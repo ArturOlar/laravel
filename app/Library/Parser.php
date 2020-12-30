@@ -1,21 +1,22 @@
 <?php
 
-namespace App\Models;
+namespace App\Library;
 
 use App\Models\News;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Author;
 use App\Models\Category;
 use App\Models\News as ModelNews;
-use App\Models\NewsImage;
 use App\Models\ParserRBC;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Orchestra\Parser\Xml\Facade as XmlParser;
 use Carbon\Carbon;
 
-abstract class Parser extends Model
+abstract class Parser
 {
+    public abstract function parser($link);
+
     // сохраняем автора (если его нет в таблице) и получаем id автора
     protected function checkAuthor($site)
     {
@@ -64,6 +65,4 @@ abstract class Parser extends Model
             return;
         }
     }
-
-    protected abstract function parser();
 }

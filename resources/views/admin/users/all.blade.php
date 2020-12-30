@@ -18,8 +18,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                @foreach($allUsers as $user)
+            @foreach($allUsers as $user)
+                <tr>
                     <td scope="row">{{ $user->id }}</td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
@@ -29,22 +29,25 @@
                             <form action="{{ route('change-status', ['id' => $user->id]) }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $user->id }}">
-                                <button name="changeToAdmin" value="changeToAdmin" class="btn btn-warning">Сделать админом</button>
+                                <button name="changeToAdmin" value="changeToAdmin" class="btn btn-warning">Сделать
+                                    админом
+                                </button>
                             </form>
                         </td>
                     @elseif($user->is_admin == '1')
-                        <td>Администратором</td>
+                        <td>Администратор</td>
                         <td>
                             <form action="{{ route('change-status', ['id' => $user->id]) }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $user->id }}">
-                                <button name="changeToUser" value="changeToUser" class="btn btn-danger">Забрать права админа</button>
+                                <button name="changeToUser" value="changeToUser" class="btn btn-danger">Забрать права
+                                    админа
+                                </button>
                             </form>
                         </td>
                     @endif
-
-                @endforeach
-            </tr>
+                </tr>
+            @endforeach
             </tbody>
         </table>
 

@@ -12,17 +12,9 @@
             <form action="{{ route('status.store') }}" method="POST">
                 @csrf
                 <div class="form-group">
-                    <label>Название статуса</label>
-                    <input name="title" type="text" class="form-control @error('title') is-invalid @enderror" value="">
+                    <label><b>Название статуса</b></label>
+                    <input name="title" type="text" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}">
                     @error('title')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label>Название статуса на английском</label>
-                    <input name="title_en" type="text" class="form-control @error('title_en') is-invalid @enderror" value="">
-                    @error('title_en')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>

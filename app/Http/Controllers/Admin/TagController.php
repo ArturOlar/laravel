@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\StoreTagRequest;
+use App\Models\News;
 use App\Models\Tag;
 use App\Models\TagStatusView;
 use Illuminate\Http\Request;
@@ -45,8 +46,9 @@ class TagController extends Controller
     public function store(StoreTagRequest $request)
     {
         Tag::create([
-            'title' => $request->title,
-            'id_status_view' => $request->status_view
+            'title' => '#' . $request->title,
+            'slug' => News::cutTextAndMakeSlug($request->title),
+            'id_status_view' => $request->status_view,
         ]);
         session()->flash('success', 'новый тег успешно создан');
         return redirect()->back();
@@ -87,7 +89,8 @@ class TagController extends Controller
     public function update(StoreTagRequest $request, $id)
     {
         Tag::where('id_tag', $id)->update([
-            'title' => $request->title
+            'title' => $request->title,
+            'slug' => News::cutTextAndMakeSlug($request->title)
         ]);
         session()->flash('success', 'тег обновлен');
         return redirect()->back();

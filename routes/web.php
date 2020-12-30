@@ -14,44 +14,45 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('/')->namespace('User')->group(function () {
+    // роутеры авторизации, регистрации
+    Auth::routes();
+    Route::get('/auth/facebook', 'Auth\LoginController@authFacebook')->name('auth-facebook');
+    Route::get('/auth/facebook/callback', 'Auth\LoginController@callbackFacebook')->name('callback-facebook');
+    Route::get('/auth/github', 'Auth\LoginController@authGithub')->name('auth-github');
+    Route::get('/auth/github/callback', 'Auth\LoginController@callbackGithub')->name('callback-github');
     Route::get('/home', 'HomeController@index')->name('home');
 
     Route::get('/', 'NewsController@allNews')->name('all-news');
     Route::prefix('/news')->group(function () {
-        Route::get('/{name}', 'NewsController@oneNews')->name('one-news');
+        Route::get('/search', 'NewsController@searchNews')->name('search-news');
+        Route::get('/{slug}', 'NewsController@oneNews')->name('one-news');
     });
+
     Route::post('/add-review', 'ReviewController@createReview')->name('add-review');
 
     Route::prefix('/category')->group(function () {
         Route::get('/all', 'CategoryController@allCategories')->name('all-categories');
-        Route::get('/{name}', 'CategoryController@oneCategory')->name('one-category');
+        Route::get('/{slug}', 'CategoryController@oneCategory')->name('one-category');
     });
 
     Route::prefix('/tag')->group(function () {
         Route::get('/all', 'TagController@allTags')->name('all-tags');
-        Route::get('/{id}', 'TagController@oneTag')->name('one-tag');
+        Route::get('/{slug}', 'TagController@oneTag')->name('one-tag');
     });
 
     Route::prefix('/news-by-status')->group(function () {
-        Route::get('/{id}', 'StatusController@allNewsByStatus')->name('news-by-status');
+        Route::get('/{slug}', 'StatusController@allNewsByStatus')->name('news-by-status');
     });
 });
 
-
-Route::get('/auth/facebook', 'Auth\LoginController@authFacebook')->name('auth-facebook');
-Route::get('/auth/facebook/callback', 'Auth\LoginController@callbackFacebook')->name('callback-facebook');
-Route::get('/auth/github', 'Auth\LoginController@authGithub')->name('auth-github');
-Route::get('/auth/github/callback', 'Auth\LoginController@callbackGithub')->name('callback-github');
-
-
-Route::prefix('/admin')->namespace('Admin')->middleware('auth')->group(function () {
+Route::prefix('/admin')->namespace('Admin')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('/news', 'NewsController');
     Route::resource('/category', 'CategoryController');
     Route::resource('/tag', 'TagController');
     Route::resource('/author', 'AuthorController');
     Route::resource('/status', 'StatusController');
 
-    Route::post('/delete-image', 'NewsImageController@deleteImage')->name('delete-image');
+    Route::post('/delete-image', 'NewsController@deleteImage')->name('delete-image');
 
     Route::prefix('/review')->group(function () {
         Route::get('/new', 'ReviewController@newReview')->name('new-review');
@@ -66,13 +67,24 @@ Route::prefix('/admin')->namespace('Admin')->middleware('auth')->group(function 
         Route::post('/changeStatus/{id}', 'UserController@changeStatus')->name('change-status');
     });
     
-    Route::prefix('/parser')->group(function () {
+    Route::prefix('/parser')->namespace('Parser')->group(function () {
+        // парсинг вручную
         Route::get('/', 'ParserController@allParsers')->name('all-parsers');
         Route::get('/rbc', 'ParserController@parserRBC')->name('parser-rbc');
         Route::get('/112', 'ParserController@parser112')->name('parser-112');
         Route::get('/korrespondent', 'ParserController@parserKorrespondent')->name('parser-korrespondent');
+        Route::get('/newsru', 'ParserController@ParserNewsru')->name('parser-news-ru');
+
+        // CRUD операции для парсинга
+        Route::get('/allLinksParser', 'ParserCRUDController@allLinksParser')->name('all-links-parser');
+        Route::get('/createLinkParser', 'ParserCRUDController@createLinkParser')->name('create-link-parser');
+        Route::post('/storeLinkParser', 'ParserCRUDController@storeLinkParser')->name('store-link-parser');
+        Route::get('/editLinkParser/{id}', 'ParserCRUDController@editLinkParser')->name('edit-link-parser');
+        Route::post('/updateLinkParser', 'ParserCRUDController@updateLinkParser')->name('update-link-parser');
+        Route::get('/deleteLinkParser/{id}', 'ParserCRUDController@deleteLinkParser')->name('delete-link-parser');
     });
 });
 
-Auth::routes();
-//['register' => false]
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});

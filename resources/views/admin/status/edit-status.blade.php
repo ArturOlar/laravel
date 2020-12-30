@@ -14,12 +14,12 @@
                 @csrf
                 @method('PUT')
                 <div class="form-group">
-                    <label>ID Тега</label>
+                    <label><b>ID Статуса</b></label>
                     <input name="id_tag" type="text" class="form-control" value="{{ $status->id_status }}" disabled>
                 </div>
 
                 <div class="form-group">
-                    <label>Название тега</label>
+                    <label><b>Название статуса</b></label>
                     <input name="title" type="text" class="form-control @error('title') is-invalid @enderror" value="{{ $status->title }}">
                     @error('title')
                         <small class="text-danger">{{ $message }}</small>

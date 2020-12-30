@@ -9,29 +9,23 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ route('all-news') }}">Все новости</a>
+                    <a class="nav-link text-danger" href="{{ route('all-news') }}">Все новости</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ route('all-categories') }}">Все Категории</a>
+                    <a class="nav-link text-danger" href="{{ route('all-categories') }}">Все Категории</a>
                 </li>
                 @foreach($categories as $category)
                     <li class="nav-item active">
                         <a class="nav-link"
-                           href="{{ route('one-category', ['id' => $category->id_category]) }}">{{ $category->title }}</a>
+                           href="{{ route('one-category', ['slug' => $category->slug ]) }}">{{ $category->title }}</a>
                     </li>
                 @endforeach
 
-                {{-- авторизация и регистрация --}}
+                {{-- авторизация --}}
                 @guest
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">Авторизация</a>
+                    <a class="nav-link text-success" href="{{ route('login') }}">Авторизация</a>
                 </li>
-
-                {{--@if (Route::has('register'))--}}
-                    {{--<li class="nav-item">--}}
-                        {{--<a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>--}}
-                    {{--</li>--}}
-                {{--@endif--}}
 
                 @else
                     <li class="nav-item dropdown">
@@ -40,8 +34,7 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            {{--<a class="dropdown-item" href="{{ route('') }}"></a>--}}
-                            <a class="" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Выйти</a>
+                            <a class="pl-3" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Выйти</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
@@ -50,9 +43,9 @@
                     @endguest
 
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
+            <form method="get" action="{{ route('search-news') }}" class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" name="search" type="search" placeholder="Поиск...">
+                <input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="Поиск">
             </form>
         </div>
     </div>
@@ -66,9 +59,12 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('all-tags') }}">Все теги</a>
+                </li>
                 @foreach($tags as $tag)
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('one-tag', ['id' => $tag->id_tag]) }}">{{ $tag->title }}</a>
+                        <a class="nav-link" href="{{ route('one-tag', ['slug' => $tag->slug ]) }}">{{ $tag->title }}</a>
                     </li>
                 @endforeach
             </ul>

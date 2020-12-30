@@ -16,8 +16,6 @@
                 <th scope="col">ID</th>
                 <th scope="col">Заголовок</th>
                 <th scope="col">Спойлер</th>
-                <th scope="col">Описание</th>
-                <th scope="col">Вторая часть описания</th>
                 <th scope="col">Категория</th>
                 <th scope="col">Автор</th>
                 <th scope="col">Теги</th>
@@ -29,28 +27,26 @@
             @foreach($allNews as $news)
                 <tr>
                     <th scope="row">{{ $news->id_news }}</th>
-                    <td>{{ $news->title }}</td>
-                    <td>{{ $news->spoiler }}</td>
-                    <td>{{ $news->content }}</td>
-                    <td>{{ $news->content_second }}</td>
+                    <td>{!! $news->title !!} ...</td>
+                    <td>{!! $news->spoiler !!} ...</td>
                     <td>{{ $news->category->title }}</td>
                     <td>{{ $news->author->name }} {{$news->author->surname }}</td>
                     <td>
                         @foreach($news->tags as $tag)
-                            {{ $tag->title }}
+                            {{ $tag->title }}; <br>
                         @endforeach
                     </td>
                     <td>
                         @foreach($news->statuses as $status)
-                            {{ $status->title }}
+                            {{ $status->title }}; <br>
                         @endforeach
                     </td>
                     <td class="text-center">
-                        <a href="{{ route('news.edit', ['id' => $news->id_news ]) }}" class="btn btn-warning mt-5">Редактировать</a>
+                        <a href="{{ route('news.edit', ['id' => $news->id_news ]) }}" class="btn btn-warning mt-2">Редактировать</a>
                         <form action="{{ route('news.destroy', ['id' => $news->id_news]) }}" method="POST">
                             @csrf
                             @method('delete')
-                            <input type="submit" class="btn btn-danger mt-5" value="Удалить">
+                            <input type="submit" class="btn btn-danger mt-2" value="Удалить">
                         </form>
                     </td>
                 </tr>

@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card mt-5">
-                <h3 class="text-center">Личный кабинет</h3>
+                <h3 class="text-center my-5">Вы успешно авторизировались</h3>
             </div>
         </div>
     </div>

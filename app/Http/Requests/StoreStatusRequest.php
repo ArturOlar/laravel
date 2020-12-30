@@ -25,7 +25,6 @@ class StoreStatusRequest extends FormRequest
     {
         return [
             'title' => 'required|min:3|max:20',
-            'title_en' => 'required|min:3|max:20'
         ];
     }
 }

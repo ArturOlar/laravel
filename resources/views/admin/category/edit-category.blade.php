@@ -14,12 +14,12 @@
                 @csrf
                 @method('PUT')
                 <div class="form-group">
-                    <label>ID Категории</label>
+                    <label><b>ID Категории</b></label>
                     <input name="id_category" type="text" class="form-control" value="{{ $category->id_category }}" disabled>
                 </div>
 
                 <div class="form-group">
-                    <label>ID Название категории</label>
+                    <label><b>Название категории</b></label>
                     <input name="title" type="text" class="form-control @error('title') is-invalid @enderror" value="{{ $category->title }}">
                     @error('title')
                         <small class="text-danger">{{ $message }}</small>

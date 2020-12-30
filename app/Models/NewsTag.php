@@ -10,7 +10,7 @@ class NewsTag extends Model
     protected $table = 'news_tag';
     protected $fillable = ['id_news', 'id_tag'];
 
-    // создать теги к новой новости
+    // создать теги к новой новости (через форму и парсер)
     public static function createTagsForNews(Request $request, $id)
     {
         if (!is_null($request->id_tags)) {

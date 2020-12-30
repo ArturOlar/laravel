@@ -42,7 +42,6 @@ class AuthorController extends Controller
     {
         Author::create([
             'name' => $request->name,
-            'surname' => $request->surname
         ]);
 
         session()->flash('success', 'новый автор успешно сохранен');
@@ -85,7 +84,6 @@ class AuthorController extends Controller
     {
         Author::where('id_author', $id)->update([
             'name' => $request->name,
-            'surname' => $request->surname
         ]);
 
         session()->flash('success', 'данные автора обновлены');
