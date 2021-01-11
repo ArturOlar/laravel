@@ -12,8 +12,8 @@
             <form action="{{ route('category.store') }}" method="POST">
                 @csrf
                 <div class="form-group">
-                    <label>Название категории</label>
-                    <input name="title" type="text" class="form-control @error('title') is-invalid @enderror" value="">
+                    <label><b>Название категории</b></label>
+                    <input name="title" type="text" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}">
                     @error('title')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror

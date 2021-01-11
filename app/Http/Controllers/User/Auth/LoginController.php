@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\User\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
@@ -31,7 +31,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin/news';
+//    protected $redirectTo = '/admin/news';
 
     /**
      * Create a new controller instance.
@@ -40,6 +40,15 @@ class LoginController extends Controller
      */
 
     protected $userRepository;
+
+    protected function authenticated()
+    {
+        if(Auth::user()->is_admin == 1) {
+            return redirect('/admin/news');
+        } else {
+            return redirect('/');
+        }
+    }
 
     public function __construct()
     {
@@ -52,7 +61,7 @@ class LoginController extends Controller
     {
         return view('user.auth.login');
     }
-
+    
     // авторизация через фейсбук
     public function authFacebook()
     {

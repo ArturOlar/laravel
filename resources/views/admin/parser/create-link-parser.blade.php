@@ -8,24 +8,38 @@
     @include('admin.alert.alert')
 
     <div class="container my-5">
-        <form class="dropdown-menu p-4">
+        <div class="mb-5">
+            <span>
+                Вы можете создать ссылку, только если в списке <b>"Выберете сайт"</b> есть сайт, который нужен. <br>
+                Если нужного сайта в списке нет - обратитесь к разработчику.
+            </span>
+        </div>
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form action="{{ route('store-link-parser') }}" method="POST">
+            @csrf
             <div class="form-group">
-                <label for="exampleDropdownFormEmail2">Email address</label>
-                <input type="email" class="form-control" id="exampleDropdownFormEmail2" placeholder="email@example.com">
+                <label><b>Вставте ссылку на ресурс</b></label>
+                <input name="link" type="text" class="form-control">
             </div>
             <div class="form-group">
-                <label for="exampleDropdownFormPassword2">Password</label>
-                <input type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password">
+                <label><b>Выберете сайт</b></label>
+                <select name="site_id" class="custom-select custom-select-lg mb-3">
+                    @foreach($sites as $site)
+                        <option value="{{ $site->id }}">{{ $site->name_site }}</option>
+                    @endforeach
+                </select>
             </div>
-            <div class="form-group">
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="dropdownCheck2">
-                    <label class="form-check-label" for="dropdownCheck2">
-                        Remember me
-                    </label>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Sign in</button>
+            <button type="submit" class="btn btn-primary">Создать</button>
         </form>
     </div>
 @endsection

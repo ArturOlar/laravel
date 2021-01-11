@@ -23,7 +23,7 @@ class NewsStatus extends Model
         }
         return;
     }
-
+    
     // оновить статусы конкретной новости
     public static function updateStatusesForNews(Request $request, $id)
     {

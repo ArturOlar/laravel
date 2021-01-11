@@ -15,7 +15,6 @@
             <tr>
                 <th scope="col">ID автора</th>
                 <th scope="col">Имя автора</th>
-                <th scope="col">Фамилия автора</th>
                 <th scope="col">Действие</th>
             </tr>
             </thead>
@@ -24,7 +23,6 @@
                 <tr>
                     <th scope="row">{{ $author->id_author }}</th>
                     <td>{{ $author->name }}</td>
-                    <td>{{ $author->surname }}</td>
                     <td>
                         <div class="row justify-content-around">
                             <a href="{{ route('author.edit', ['id' => $author->id_author ]) }}" class="btn btn-warning">Редактировать</a>

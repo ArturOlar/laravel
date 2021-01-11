@@ -6,6 +6,10 @@ use App\Models\Author;
 use App\Models\Category;
 use App\Models\News;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
 
 class StoreNewsRequest extends FormRequest
 {
@@ -31,10 +35,8 @@ class StoreNewsRequest extends FormRequest
 
         return [
             'title' => 'required|min:50|max:200',
-            'spoiler' => 'required|min:200|max:500',
-            'content' => 'required|min:2000|max:5000',
-            'content_second' => 'required|min:2000|max:5000',
-            'images' => 'required',
+            'spoiler' => 'required|min:100|max:1000',
+            'content' => 'required|min:1000|max:10000',
             'id_category' => "required|integer|exists:{$tableCategory},id_category",
             'id_author' => "required|integer|exists:{$tableAuthor},id_author"
         ];

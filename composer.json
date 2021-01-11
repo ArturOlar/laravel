@@ -17,7 +17,10 @@
         "orchestra/parser": "^3.8",
         "socialiteproviders/facebook": "^1.0",
         "socialiteproviders/github": "^1.0",
-        "socialiteproviders/vkontakte": "^4.0"
+        "socialiteproviders/google": "^3.0",
+        "socialiteproviders/vkontakte": "^4.0",
+        "tymon/jwt-auth": "^1.0",
+        "unisharp/laravel-filemanager": "^2.2"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

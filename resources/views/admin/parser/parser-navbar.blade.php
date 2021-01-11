@@ -5,9 +5,15 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <ul class="navbar-nav mr-auto">
-            <la><a href="">Запустить парсер</a></la>
-            <li><a href="">Добавить новый адресс парсера</a></li>
-            <li><a href="">Редактирование парсерра</a></li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('all-parsers') }}">Парсер</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('create-link-parser') }}">Создать ссылку для парсинга</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('all-links-parser') }}">Все ссылки парсинга</a>
+            </li>
         </ul>
 
     </div>

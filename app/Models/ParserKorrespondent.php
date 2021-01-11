@@ -15,27 +15,14 @@ use Carbon\Carbon;
 
 class ParserKorrespondent extends Parser
 {
-    protected $links = [
-        'http://k.img.com.ua/rss/ru/worldabus.xml',
-        'http://k.img.com.ua/rss/ru/cinema.xml',
-        'http://k.img.com.ua/rss/ru/music.xml',
-        'http://k.img.com.ua/rss/ru/culture.xml',
-        'http://k.img.com.ua/rss/ru/deti.xml',
-        'http://k.img.com.ua/rss/ru/vibory2019.xml',
-        'http://k.img.com.ua/rss/ru/space.xml',
-        'http://k.img.com.ua/rss/ru/basketball.xml',
-        'http://k.img.com.ua/rss/ru/chess.xml',
-        'http://k.img.com.ua/rss/ru/hokey.xml',
-        'http://k.img.com.ua/rss/ru/motors.xml',
-        'http://k.img.com.ua/rss/ru/travel.xml'
-    ];
-
     // парсер
     public function parser()
     {
+        $links = NewsResources::where('id_name_site', '3')->get();
+
         // парсим сайта
-        for ($i = 0; $i < count($this->links); $i++) {
-            $xml = XmlParser::load($this->links[$i]);
+        for ($i = 0; $i < count($links); $i++) {
+            $xml = XmlParser::load($links[$i]->url_resource);
             $site = 'Корреспондент';
             $allNews = $xml->parse([
                 'news' => ['uses' => 'channel.item[guid,title,description,fulltext,category,enclosure::url]'],
@@ -46,11 +33,15 @@ class ParserKorrespondent extends Parser
 
             foreach ($allNews as $news) {
                 foreach ($news as $oneNews) {
-                    // сохраянем категорию и получаем id категории
-                    $categoryId = $this->checkCategory($oneNews);
+                    try {
+                        // сохраянем категорию и получаем id категории
+                        $categoryId = $this->checkCategory($oneNews);
 
-                    // сохраняем новость если ее нет
-                    $this->checkNews($oneNews, $categoryId, $authorId);
+                        // сохраняем новость если ее нет
+                        $this->checkNews($oneNews, $categoryId, $authorId);
+                    } catch (\Exception $e) {
+                        continue;
+                    }
                 }
             }
         }

@@ -9,7 +9,7 @@
                         @foreach($allCategories as $category)
                             <div class="col-md-6 text-center border py-5">
                                 <h4 class="mb-4">Категория: {{ $category->title }}</h4>
-                                <a href="{{ route('one-category', ['id' => $category->id_category]) }}"
+                                <a href="{{ route('one-category', ['slug' => $category->slug]) }}"
                                    class="btn btn-primary">Смотреть все новости</a>
                             </div>
                         @endforeach

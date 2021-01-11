@@ -25,7 +25,6 @@ class StoreTagRequest extends FormRequest
     {
         return [
             'title' => 'required|min:3|max:20',
-            'status_view' => 'required|integer'
         ];
     }
 }

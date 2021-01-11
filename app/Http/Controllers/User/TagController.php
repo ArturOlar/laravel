@@ -10,10 +10,20 @@ use App\Http\Controllers\Controller;
 
 class TagController extends Controller
 {
-    public function oneTag($id)
+    // все теги
+    public function allTags()
     {
-        return view('user.tag.one-tag', [
-            'newsByTag' => Tag::find($id)
+        return view('user.tag.all-tags', ['allTags' => Tag::all()]);
+    }
+
+    // все новости одного тега
+    public function oneTag($slug)
+    {
+        $tag = Tag::where('slug', $slug)->get();
+        $title = $tag[0]['title'];
+        return view('user.news.all-news', [
+            'title' => "Все новости по тегу \"$title\"",
+            'allNews' => $tag[0]->news()->paginate(20)
         ]);
     }
 }

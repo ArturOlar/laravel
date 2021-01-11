@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\News;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Author;
 use App\Models\Category;
-use App\Models\News;
+use App\Models\News as ModelNews;
 use App\Models\NewsImage;
 use App\Models\ParserRBC;
 use Illuminate\Http\Request;
@@ -13,10 +14,8 @@ use App\Http\Controllers\Controller;
 use Orchestra\Parser\Xml\Facade as XmlParser;
 use Carbon\Carbon;
 
-class Parser extends Model
+abstract class Parser extends Model
 {
-    protected $links = [];
-
     // сохраняем автора (если его нет в таблице) и получаем id автора
     protected function checkAuthor($site)
     {
@@ -38,7 +37,10 @@ class Parser extends Model
             $categoryId = Category::find($categoryId[0]->id_category);
             return $categoryId;
         } else {
-            $categoryId = Category::create(['title' => $oneNews['category']]);
+            $categoryId = Category::create([
+                'title' => $oneNews['category'],
+                'slug' => News::cutTextAndMakeSlug($oneNews['category'])
+            ]);
             return $categoryId;
         }
     }
@@ -46,11 +48,12 @@ class Parser extends Model
     // сохраняем новость (если ее нет)
     protected function checkNews($oneNews, $categoryId, $authorId)
     {
-//        dd($oneNews['guid']);
         if (!News::where('guid', $oneNews['guid'])->exists()) {
-            $newNews = News::create([
+            News::create([
                 'guid' => $oneNews['guid'],
                 'id_category' => $categoryId->id_category,
+                'image_url' => $oneNews['enclosure::url'],
+                'slug' => ModelNews::cutTextAndMakeSlug($oneNews['title']),
                 'title' => $oneNews['title'],
                 'spoiler' => $oneNews['description'],
                 'content' => $oneNews['fulltext'],
@@ -58,8 +61,9 @@ class Parser extends Model
                 'updated_at' => Carbon::now(),
                 'id_author' => $authorId->id_author
             ]);
-            NewsImage::createImagesForNewsParser($oneNews['enclosure::url'], $newNews->id_news);
             return;
         }
     }
+
+    protected abstract function parser();
 }

@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Author;
 use App\Models\Category;
 use App\Models\News;
-use App\Models\NewsImage;
 use App\Models\ParserRBC;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -15,36 +14,52 @@ use Carbon\Carbon;
 
 class ParserRBC extends Parser
 {
-    protected $links = [
-        'https://www.rbc.ua/static/rss/ukrnet.politics.rus.rss.xml',
-        'https://www.rbc.ua/static/rss/ukrnet.economic.rus.rss.xml',
-        'https://www.rbc.ua/static/rss/ukrnet.accidents.rus.rss.xml',
-        'https://www.rbc.ua/static/rss/ukrnet.culture.rus.rss.xml',
-        'https://www.rbc.ua/static/rss/ukrnet.sport.rus.rss.xml',
-        'https://www.rbc.ua/static/rss/digests.rus.rss.xml',
-    ];
+    // добавляем в описание новости, в img текст 'src="https://www.rbc.ua'
+    private function addCorrectImgLink($allNews)
+    {
+        $i = 0;
+        foreach ($allNews as $news) {
+            foreach ($news as $oneNews) {
+                if (preg_match('/(src="\/static)/', $oneNews['fulltext'])) {
+                    $pattern = preg_replace('/(src=")/', 'src="https://www.rbc.ua', $oneNews['fulltext']);
+                    $allNews['news'][$i]['fulltext'] = $pattern;
+                }
+                $i++;
+            }
+        }
+        return $allNews;
+    }
 
     // парсер
     public function parser()
     {
-        // парсим сайта
-        for ($i = 0; $i < count($this->links); $i++){
-            $xml = XmlParser::load($this->links[$i]);
+        $links = NewsResources::where('id_name_site', '2')->get();
+
+        // парсим сайт
+        for ($i = 0; $i < count($links); $i++) {
+            $xml = XmlParser::load($links[$i]->url_resource);
             $site = 'РБК-Украина';
             $allNews = $xml->parse([
                 'news' => ['uses' => 'channel.item[guid,title,description,fulltext,category,enclosure::url]'],
             ]);
+
+            // добавляем в описание новости, в img текст 'src="https://www.rbc.ua'
+            $allNews = $this->addCorrectImgLink($allNews);
 
             // сохраняем автора и получаем id автора
             $authorId = $this->checkAuthor($site);
 
             foreach ($allNews as $news) {
                 foreach ($news as $oneNews) {
-                    // сохраянем категорию и получаем id категории
-                    $categoryId = $this->checkCategory($oneNews);
+                    try {
+                        // сохраянем категорию и получаем id категории
+                        $categoryId = $this->checkCategory($oneNews);
 
-                    // сохраняем новость если ее нет
-                    $this->checkNews($oneNews, $categoryId, $authorId);
+                        // сохраняем новость если ее нет
+                        $this->checkNews($oneNews, $categoryId, $authorId);
+                    } catch (\Exception $e) {
+                        continue;
+                    }
                 }
             }
         }

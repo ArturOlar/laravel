@@ -15,19 +15,19 @@ class StatusSeeder extends Seeder
     }
 
     private $statusArray = [
-        'новости дня' => 'news_day',
-        'новые' => 'new',
-        'самые читаемые' => 'must_read',
-        'важное' => 'important'
+        'новости дня',
+        'новые',
+        'самые читаемые',
+        'важное'
     ];
 
     private function getData()
     {
         $data = [];
-        foreach ($this->statusArray as $key => $value){
+        for ($i = 0; $i < count($this->statusArray); $i++) {
             $data[] = [
-                'title' => $key,
-                'title_en' => $value
+                'title' => $this->statusArray[$i],
+                'slug' => \App\Models\News::cutTextAndMakeSlug($this->statusArray[$i])
             ];
         }
         return $data;

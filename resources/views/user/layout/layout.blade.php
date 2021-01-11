@@ -20,27 +20,6 @@
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
-    // ajax подгрузка товаров на странице home
-    function downloadNews() {
-        var path = window.location.search;
-        if (path == '') {
-            var page = 1;
-        } else {
-            var page = path.substr(-1);
-        }
-
-        $.ajax({
-            url: '{{ route('all-news') }}',
-            method: "GET",
-            data: {page: page},
-            headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-
-            success: function(data){
-                console.log(data);
-            }
-        });
-    }
-
     // добавления отзыва пользователем
     function addReview(idUser) {
         var review = $('#review').val();

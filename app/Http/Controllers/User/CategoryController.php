@@ -10,20 +10,20 @@ use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
 {
-    // все новости
+    // все категории
     public function allCategories()
     {
-        return view('user.category.all-categories', [
-            'allCategories' => Category::all()
-        ]);
+        return view('user.category.all-categories', ['allCategories' => Category::all()]);
     }
 
-    // одна новость
-    public function oneCategory($id)
+    // все новости одной категории
+    public function oneCategory($slug)
     {
-        return view('user.category.one-category', [
-            'newsFromCategory' => News::where('id_category', $id)->paginate(6),
-            'category' => Category::find($id)
+        $category = Category::where('slug', $slug)->get();
+        $title = $category[0]['title'];
+        return view('user.news.all-news', [
+            'title' => "Все новости категории \"$title\"",
+            'allNews' => News::where('id_category', $category[0]['id_category'])->paginate(15),
         ]);
     }
 }

@@ -25,7 +25,7 @@
                     <td>{{ $site->site->name_site }}</td>
                     <td>
                         <a href="{{ route('edit-link-parser', ['id' => $site->id]) }}" class="btn btn-danger">Редактировать</a>
-                        <a href="" class="btn btn-warning">Удалить</a>
+                        <a href="{{ route('delete-link-parser', ['id' => $site->id]) }}" class="btn btn-warning">Удалить</a>
                     </td>
                 </tr>
             @endforeach

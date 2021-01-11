@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // данные для header
         view()->composer('user.layout.header', function ($view) {
-            $view->with('categories', Category::take(6)->get());
+            $view->with('categories', Category::take(5)->get());
             $view->with('tags', Tag::take(15)->get());
         });
 
@@ -41,10 +41,10 @@ class AppServiceProvider extends ServiceProvider
 
         // данные для footer
         view()->composer('user.layout.footer', function ($view) {
-            $view->with('categoriesFooter', Category::all());
-            $view->with('tagsFooter', Tag::all());
-            $view->with('newsByStatusFooter', Status::all());
-            $view->with('authors', Author::all());
+            $view->with('categoriesFooter', Category::take(15)->get());
+            $view->with('tagsFooter', Tag::take(15)->get());
+            $view->with('newsByStatusFooter', Status::take(15)->get());
+            $view->with('authors', Author::take(15)->get());
         });
     }
 }
